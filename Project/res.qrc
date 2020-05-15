@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/logo.png</file>
+        <file>images/logo.ico</file>
+        <file>images/close.png</file>
+        <file>images/max.png</file>
+        <file>images/min.png</file>
+        <file>images/close_hover.png</file>
+        <file>images/close_pressed.png</file>
+        <file>images/max_hover.png</file>
+        <file>images/max_pressed.png</file>
+        <file>images/min_hover.png</file>
+        <file>images/min_pressed.png</file>
+        <file>images/setting.png</file>
+        <file>images/setting_hover.png</file>
+        <file>images/setting_pressed.png</file>
+        <file>images/home.png</file>
+        <file>images/home_hover.png</file>
+        <file>images/home_pressed.png</file>
+        <file>images/course.png</file>
+        <file>images/course_hover.png</file>
+        <file>images/course_pressed.png</file>
+        <file>images/discuss.png</file>
+        <file>images/discuss_hover.png</file>
+        <file>images/discuss_pressed.png</file>
+        <file>images/download.png</file>
+        <file>images/download_hover.png</file>
+        <file>images/download_pressed.png</file>
+        <file>images/friend.png</file>
+        <file>images/friend_hover.png</file>
+        <file>images/friend_pressed.png</file>
+        <file>images/user.png</file>
+        <file>images/user_hover.png</file>
+        <file>images/user_pressed.png</file>
+    </qresource>
+</RCC>

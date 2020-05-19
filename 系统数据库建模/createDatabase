@@ -1,0 +1,641 @@
+/*==============================================================*/
+/* DBMS name:      Sybase SQL Anywhere 12                       */
+/* Created on:     2020/5/19 16:09:03                           */
+/*==============================================================*/
+
+
+if exists(select 1 from sys.sysforeignkey where role='FK_COLLECTI_REFERENCE_USER') then
+    alter table CollectionArrangement
+       delete foreign key FK_COLLECTI_REFERENCE_USER
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_COMMENT_REFERENCE_QUESTION') then
+    alter table "Comment"
+       delete foreign key FK_COMMENT_REFERENCE_QUESTION
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_CONCERNA_REFERENCE_USER') then
+    alter table ConcernArrangement
+       delete foreign key FK_CONCERNA_REFERENCE_USER
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_COURCEAR_COURCEARR_COURCE') then
+    alter table CourceArrangement
+       delete foreign key FK_COURCEAR_COURCEARR_COURCE
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_COURCEAR_COURCEARR_USER') then
+    alter table CourceArrangement
+       delete foreign key FK_COURCEAR_COURCEARR_USER
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_HOMEWORK_ARRANGEWO_COURCE') then
+    alter table Homework
+       delete foreign key FK_HOMEWORK_ARRANGEWO_COURCE
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_LIVEARRA_WATHCHLIV_USER') then
+    alter table LiveArrangement
+       delete foreign key FK_LIVEARRA_WATHCHLIV_USER
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_LIVEARRA_WATHCHLIV_LIVETELE') then
+    alter table LiveArrangement
+       delete foreign key FK_LIVEARRA_WATHCHLIV_LIVETELE
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_MESSAGEA_REFERENCE_COURCEAR') then
+    alter table MessageArrangement
+       delete foreign key FK_MESSAGEA_REFERENCE_COURCEAR
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_QUESTION_REFERENCE_COURCEAR') then
+    alter table Question
+       delete foreign key FK_QUESTION_REFERENCE_COURCEAR
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_QUESTION_REFERENCE_QUESTION') then
+    alter table QuestionArction
+       delete foreign key FK_QUESTION_REFERENCE_QUESTION
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_RESOURCE_REFERENCE_COURCEAR') then
+    alter table ResourceArrangement
+       delete foreign key FK_RESOURCE_REFERENCE_COURCEAR
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_TEST_ARRANGETE_COURCE') then
+    alter table Test
+       delete foreign key FK_TEST_ARRANGETE_COURCE
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_TESTARRA_TESTARRAN_TEST') then
+    alter table TestArrangement
+       delete foreign key FK_TESTARRA_TESTARRAN_TEST
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_TESTARRA_TESTARRAN_USER') then
+    alter table TestArrangement
+       delete foreign key FK_TESTARRA_TESTARRAN_USER
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_WORKARRA_WORKARRAN_HOMEWORK') then
+    alter table WorkArrangement
+       delete foreign key FK_WORKARRA_WORKARRAN_HOMEWORK
+end if;
+
+if exists(select 1 from sys.sysforeignkey where role='FK_WORKARRA_WORKARRAN_USER') then
+    alter table WorkArrangement
+       delete foreign key FK_WORKARRA_WORKARRAN_USER
+end if;
+
+drop table if exists CollectionArrangement;
+
+drop table if exists "Comment";
+
+drop table if exists ConcernArrangement;
+
+drop index if exists Cource.Cource_PK;
+
+drop table if exists Cource;
+
+drop index if exists CourceArrangement.TakeCource2_FK;
+
+drop index if exists CourceArrangement.TakeCource_FK;
+
+drop index if exists CourceArrangement.TakeCource_PK;
+
+drop table if exists CourceArrangement;
+
+drop index if exists Homework.ArrangeWork_FK;
+
+drop index if exists Homework.Homework_PK;
+
+drop table if exists Homework;
+
+drop index if exists LiveArrangement.WathchLive2_FK;
+
+drop index if exists LiveArrangement.WathchLive_FK;
+
+drop index if exists LiveArrangement.WathchLive_PK;
+
+drop table if exists LiveArrangement;
+
+drop index if exists LiveTelecast.LiveTelecast_PK;
+
+drop table if exists LiveTelecast;
+
+drop index if exists MessageArrangement.Message_PK;
+
+drop table if exists MessageArrangement;
+
+drop index if exists Question.Question_PK;
+
+drop table if exists Question;
+
+drop table if exists QuestionArction;
+
+drop index if exists ResourceArrangement.Resource_PK;
+
+drop table if exists ResourceArrangement;
+
+drop index if exists Test.ArrangeTest_FK;
+
+drop index if exists Test.Test_PK;
+
+drop table if exists Test;
+
+drop index if exists TestArrangement.TestArrangement2_FK;
+
+drop index if exists TestArrangement.TestArrangement_FK;
+
+drop index if exists TestArrangement.TestArrangement_PK;
+
+drop table if exists TestArrangement;
+
+drop index if exists "User".User_PK;
+
+drop table if exists "User";
+
+drop index if exists WorkArrangement.UploadWork2_FK;
+
+drop index if exists WorkArrangement.UploadWork_FK;
+
+drop index if exists WorkArrangement.UploadWork_PK;
+
+drop table if exists WorkArrangement;
+
+/*==============================================================*/
+/* Table: CollectionArrangement                                 */
+/*==============================================================*/
+create table CollectionArrangement 
+(
+   collection_id        varchar(20)                    not null,
+   user_id              varchar(20)                    null,
+   collection_type      integer                        not null,
+   collection_content   long varchar                   not null,
+   collection_time      timestamp                      null,
+   constraint PK_COLLECTIONARRANGEMENT primary key clustered (collection_id)
+);
+
+/*==============================================================*/
+/* Table: "Comment"                                             */
+/*==============================================================*/
+create table "Comment" 
+(
+   comment_id           varchar(20)                    not null,
+   ques_id              varchar(20)                    null,
+   comment_uid          varchar(20)                    not null,
+   comment_content      long varchar                   not null,
+   comment_time         timestamp                      not null,
+   constraint PK_COMMENT primary key clustered (comment_id)
+);
+
+/*==============================================================*/
+/* Table: ConcernArrangement                                    */
+/*==============================================================*/
+create table ConcernArrangement 
+(
+   concern_id           varchar(20)                    not null,
+   user_id              varchar(20)                    null,
+   concern_quesid       varchar(20)                    not null,
+   concern_time         timestamp                      not null,
+   constraint PK_CONCERNARRANGEMENT primary key clustered (concern_id)
+);
+
+/*==============================================================*/
+/* Table: Cource                                                */
+/*==============================================================*/
+create table Cource 
+(
+   cource_idt           varchar(20)                    not null,
+   cource_name          varchar(20)                    not null,
+   cource_teacher       varchar(20)                    not null,
+   cource_descr         varchar(500)                   null,
+   cource_plan          long varchar                   null,
+   cource_time          varchar(100)                   null,
+   constraint PK_COURCE primary key (cource_idt)
+);
+
+/*==============================================================*/
+/* Index: Cource_PK                                             */
+/*==============================================================*/
+create unique index Cource_PK on Cource (
+cource_idt ASC
+);
+
+/*==============================================================*/
+/* Table: CourceArrangement                                     */
+/*==============================================================*/
+create table CourceArrangement 
+(
+   cource_idt           varchar(20)                    not null,
+   user_id              varchar(20)                    not null,
+   constraint PK_COURCEARRANGEMENT primary key clustered (cource_idt, user_id)
+);
+
+/*==============================================================*/
+/* Index: TakeCource_PK                                         */
+/*==============================================================*/
+create unique clustered index TakeCource_PK on CourceArrangement (
+cource_idt ASC,
+user_id ASC
+);
+
+/*==============================================================*/
+/* Index: TakeCource_FK                                         */
+/*==============================================================*/
+create index TakeCource_FK on CourceArrangement (
+cource_idt ASC
+);
+
+/*==============================================================*/
+/* Index: TakeCource2_FK                                        */
+/*==============================================================*/
+create index TakeCource2_FK on CourceArrangement (
+user_id ASC
+);
+
+/*==============================================================*/
+/* Table: Homework                                              */
+/*==============================================================*/
+create table Homework 
+(
+   homework_id          varchar(20)                    not null,
+   cource_idt           varchar(20)                    null,
+   homework_name        varchar(50)                    not null,
+   homework_content     long varchar                   not null,
+   homework_time        timestamp                      not null,
+   constraint PK_HOMEWORK primary key (homework_id)
+);
+
+/*==============================================================*/
+/* Index: Homework_PK                                           */
+/*==============================================================*/
+create unique index Homework_PK on Homework (
+homework_id ASC
+);
+
+/*==============================================================*/
+/* Index: ArrangeWork_FK                                        */
+/*==============================================================*/
+create index ArrangeWork_FK on Homework (
+cource_idt ASC
+);
+
+/*==============================================================*/
+/* Table: LiveArrangement                                       */
+/*==============================================================*/
+create table LiveArrangement 
+(
+   user_id              varchar(20)                    not null,
+   live_id              char(20)                       not null,
+   watch_btime          timestamp                      not null,
+   watch_etime          timestamp                      not null,
+   constraint PK_LIVEARRANGEMENT primary key clustered (user_id, live_id)
+);
+
+/*==============================================================*/
+/* Index: WathchLive_PK                                         */
+/*==============================================================*/
+create unique clustered index WathchLive_PK on LiveArrangement (
+user_id ASC,
+live_id ASC
+);
+
+/*==============================================================*/
+/* Index: WathchLive_FK                                         */
+/*==============================================================*/
+create index WathchLive_FK on LiveArrangement (
+user_id ASC
+);
+
+/*==============================================================*/
+/* Index: WathchLive2_FK                                        */
+/*==============================================================*/
+create index WathchLive2_FK on LiveArrangement (
+live_id ASC
+);
+
+/*==============================================================*/
+/* Table: LiveTelecast                                          */
+/*==============================================================*/
+create table LiveTelecast 
+(
+   live_id              char(20)                       not null,
+   live_name            char(20)                       not null,
+   live_pass            char(10)                       not null,
+   live_planbt          timestamp                      not null,
+   live_planet          timestamp                      not null,
+   live_actubt          timestamp                      not null,
+   live_actuet          timestamp                      not null,
+   constraint PK_LIVETELECAST primary key (live_id)
+);
+
+/*==============================================================*/
+/* Index: LiveTelecast_PK                                       */
+/*==============================================================*/
+create unique index LiveTelecast_PK on LiveTelecast (
+live_id ASC
+);
+
+/*==============================================================*/
+/* Table: MessageArrangement                                    */
+/*==============================================================*/
+create table MessageArrangement 
+(
+   message_id           varchar(20)                    not null,
+   cource_idt           varchar(20)                    null,
+   user_id              varchar(20)                    null,
+   message_time         timestamp                      not null,
+   message_content      long varchar                   not null,
+   message_answ_uid     varchar(20)                    null,
+   message_answ_content long varchar                   null,
+   message_answ_time    timestamp                      null,
+   constraint PK_MESSAGEARRANGEMENT primary key (message_id)
+);
+
+/*==============================================================*/
+/* Index: Message_PK                                            */
+/*==============================================================*/
+create unique index Message_PK on MessageArrangement (
+message_id ASC
+);
+
+/*==============================================================*/
+/* Table: Question                                              */
+/*==============================================================*/
+create table Question 
+(
+   ques_id              varchar(20)                    not null,
+   cource_idt           varchar(20)                    null,
+   user_id              varchar(20)                    null,
+   ques_content         varchar(500)                   not null,
+   ques_time            timestamp                      not null,
+   constraint PK_QUESTION primary key (ques_id)
+);
+
+/*==============================================================*/
+/* Index: Question_PK                                           */
+/*==============================================================*/
+create unique index Question_PK on Question (
+ques_id ASC
+);
+
+/*==============================================================*/
+/* Table: QuestionArction                                       */
+/*==============================================================*/
+create table QuestionArction 
+(
+   quesAct_id           varchar(20)                    not null,
+   ques_id              varchar(20)                    null,
+   quesAct_uid          varchar(20)                    not null,
+   quesAct_type         integer                        not null,
+   quesAct_time         timestamp                      not null,
+   constraint PK_QUESTIONARCTION primary key clustered (quesAct_id)
+);
+
+/*==============================================================*/
+/* Table: ResourceArrangement                                   */
+/*==============================================================*/
+create table ResourceArrangement 
+(
+   res_id               varchar(20)                    not null,
+   cource_idt           varchar(20)                    null,
+   user_id              varchar(20)                    null,
+   res_time             timestamp                      not null,
+   res_type             varchar(10)                    not null,
+   res_url              varchar(25)                    null,
+   constraint PK_RESOURCEARRANGEMENT primary key (res_id)
+);
+
+/*==============================================================*/
+/* Index: Resource_PK                                           */
+/*==============================================================*/
+create unique index Resource_PK on ResourceArrangement (
+res_id ASC
+);
+
+/*==============================================================*/
+/* Table: Test                                                  */
+/*==============================================================*/
+create table Test 
+(
+   test_id              varchar(20)                    not null,
+   cource_idt           varchar(20)                    null,
+   test_name            varchar(50)                    not null,
+   test_content         long varchar                   not null,
+   test_time            timestamp                      not null,
+   constraint PK_TEST primary key (test_id)
+);
+
+/*==============================================================*/
+/* Index: Test_PK                                               */
+/*==============================================================*/
+create unique index Test_PK on Test (
+test_id ASC
+);
+
+/*==============================================================*/
+/* Index: ArrangeTest_FK                                        */
+/*==============================================================*/
+create index ArrangeTest_FK on Test (
+cource_idt ASC
+);
+
+/*==============================================================*/
+/* Table: TestArrangement                                       */
+/*==============================================================*/
+create table TestArrangement 
+(
+   test_id              varchar(20)                    not null,
+   user_id              varchar(20)                    not null,
+   test_status          integer                        not null,
+   test_time            timestamp                      null,
+   test_score           float(3)                       null,
+   test_content         long varchar                   null,
+   constraint PK_TESTARRANGEMENT primary key clustered (test_id, user_id)
+);
+
+/*==============================================================*/
+/* Index: TestArrangement_PK                                    */
+/*==============================================================*/
+create unique clustered index TestArrangement_PK on TestArrangement (
+test_id ASC,
+user_id ASC
+);
+
+/*==============================================================*/
+/* Index: TestArrangement_FK                                    */
+/*==============================================================*/
+create index TestArrangement_FK on TestArrangement (
+test_id ASC
+);
+
+/*==============================================================*/
+/* Index: TestArrangement2_FK                                   */
+/*==============================================================*/
+create index TestArrangement2_FK on TestArrangement (
+user_id ASC
+);
+
+/*==============================================================*/
+/* Table: "User"                                                */
+/*==============================================================*/
+create table "User" 
+(
+   user_id              varchar(20)                    not null,
+   user_name            varchar(15)                    not null,
+   user_pass            varchar(10)                    not null,
+   user_tel             varchar(11)                    not null,
+   user_school          varchar(20)                    not null,
+   user_college         varchar(20)                    not null,
+   user_status          varchar(10)                    null,
+   constraint PK_USER primary key (user_id)
+);
+
+/*==============================================================*/
+/* Index: User_PK                                               */
+/*==============================================================*/
+create unique index User_PK on "User" (
+user_id ASC
+);
+
+/*==============================================================*/
+/* Table: WorkArrangement                                       */
+/*==============================================================*/
+create table WorkArrangement 
+(
+   homework_id          varchar(20)                    not null,
+   user_id              varchar(20)                    not null,
+   homework_status      integer                        not null,
+   homework_time        timestamp                      not null,
+   homework_score       float(3)                       null,
+   homework_content     long varchar                   null,
+   constraint PK_WORKARRANGEMENT primary key clustered (homework_id, user_id)
+);
+
+/*==============================================================*/
+/* Index: UploadWork_PK                                         */
+/*==============================================================*/
+create unique clustered index UploadWork_PK on WorkArrangement (
+homework_id ASC,
+user_id ASC
+);
+
+/*==============================================================*/
+/* Index: UploadWork_FK                                         */
+/*==============================================================*/
+create index UploadWork_FK on WorkArrangement (
+homework_id ASC
+);
+
+/*==============================================================*/
+/* Index: UploadWork2_FK                                        */
+/*==============================================================*/
+create index UploadWork2_FK on WorkArrangement (
+user_id ASC
+);
+
+alter table CollectionArrangement
+   add constraint FK_COLLECTI_REFERENCE_USER foreign key (user_id)
+      references "User" (user_id)
+      on update restrict
+      on delete restrict;
+
+alter table "Comment"
+   add constraint FK_COMMENT_REFERENCE_QUESTION foreign key (ques_id)
+      references Question (ques_id)
+      on update restrict
+      on delete restrict;
+
+alter table ConcernArrangement
+   add constraint FK_CONCERNA_REFERENCE_USER foreign key (user_id)
+      references "User" (user_id)
+      on update restrict
+      on delete restrict;
+
+alter table CourceArrangement
+   add constraint FK_COURCEAR_COURCEARR_COURCE foreign key (cource_idt)
+      references Cource (cource_idt)
+      on update restrict
+      on delete restrict;
+
+alter table CourceArrangement
+   add constraint FK_COURCEAR_COURCEARR_USER foreign key (user_id)
+      references "User" (user_id)
+      on update restrict
+      on delete restrict;
+
+alter table Homework
+   add constraint FK_HOMEWORK_ARRANGEWO_COURCE foreign key (cource_idt)
+      references Cource (cource_idt)
+      on update restrict
+      on delete restrict;
+
+alter table LiveArrangement
+   add constraint FK_LIVEARRA_WATHCHLIV_USER foreign key (user_id)
+      references "User" (user_id)
+      on update restrict
+      on delete restrict;
+
+alter table LiveArrangement
+   add constraint FK_LIVEARRA_WATHCHLIV_LIVETELE foreign key (live_id)
+      references LiveTelecast (live_id)
+      on update restrict
+      on delete restrict;
+
+alter table MessageArrangement
+   add constraint FK_MESSAGEA_REFERENCE_COURCEAR foreign key (cource_idt, user_id)
+      references CourceArrangement (cource_idt, user_id)
+      on update restrict
+      on delete restrict;
+
+alter table Question
+   add constraint FK_QUESTION_REFERENCE_COURCEAR foreign key (cource_idt, user_id)
+      references CourceArrangement (cource_idt, user_id)
+      on update restrict
+      on delete restrict;
+
+alter table QuestionArction
+   add constraint FK_QUESTION_REFERENCE_QUESTION foreign key (ques_id)
+      references Question (ques_id)
+      on update restrict
+      on delete restrict;
+
+alter table ResourceArrangement
+   add constraint FK_RESOURCE_REFERENCE_COURCEAR foreign key (cource_idt, user_id)
+      references CourceArrangement (cource_idt, user_id)
+      on update restrict
+      on delete restrict;
+
+alter table Test
+   add constraint FK_TEST_ARRANGETE_COURCE foreign key (cource_idt)
+      references Cource (cource_idt)
+      on update restrict
+      on delete restrict;
+
+alter table TestArrangement
+   add constraint FK_TESTARRA_TESTARRAN_TEST foreign key (test_id)
+      references Test (test_id)
+      on update restrict
+      on delete restrict;
+
+alter table TestArrangement
+   add constraint FK_TESTARRA_TESTARRAN_USER foreign key (user_id)
+      references "User" (user_id)
+      on update restrict
+      on delete restrict;
+
+alter table WorkArrangement
+   add constraint FK_WORKARRA_WORKARRAN_HOMEWORK foreign key (homework_id)
+      references Homework (homework_id)
+      on update restrict
+      on delete restrict;
+
+alter table WorkArrangement
+   add constraint FK_WORKARRA_WORKARRAN_USER foreign key (user_id)
+      references "User" (user_id)
+      on update restrict
+      on delete restrict;
+
